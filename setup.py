@@ -27,9 +27,15 @@ setup(
             'swagger_spec_validator/schemas/v2.0/*',
         ],
     },
+    entry_points={
+        'console_scripts': [
+            'validate_spec = swagger_spec_validator.util:validate_spec',
+        ]
+    },
     include_package_data=True,
     install_requires=[
         'jsonschema',
+        'pyyaml',
         'six',
     ],
     license=about['__license__']

@@ -1,4 +1,7 @@
 import logging
+import yaml
+import json
+import click
 
 from swagger_spec_validator import validator12, validator20
 from swagger_spec_validator.common import SwaggerValidationError
@@ -51,3 +54,22 @@ def validate_spec_url(spec_url):
     spec_json = load_json(spec_url)
     validator = get_validator(spec_json, spec_url)
     validator.validate_spec(spec_json, spec_url)
+
+
+@click.command()
+@click.argument('spec_file')
+@wrap_exception
+def validate_spec(spec_file):
+    click.echo('swagger validate start!')
+    with open(spec_file) as f:
+        if spec_file.endswith('.yml') or spec_file.endswith('.yaml'):
+            spec_json = yaml.load(f)
+        elif spec_file.endswith('.json'):
+            spec_json = json.load(f)
+        else:
+            click.echo('swagger file neither json nor yaml')
+            return
+
+    validator = get_validator(spec_json)
+    validator.validate_spec(spec_json)
+    click.echo('swagger validate finished!')
