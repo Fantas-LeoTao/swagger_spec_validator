@@ -29,7 +29,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'validate_spec = swagger_spec_validator.util:validate_spec',
+            'swagger-spec-validate = swagger_spec_validator.util:validate_spec',
         ]
     },
     include_package_data=True,
